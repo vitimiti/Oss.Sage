@@ -16,4 +16,18 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
+    <Panel>
+        <Carousel Name="Mods">
+            <Carousel.PageTransition>
+                <CompositePageTransition>
+                    <PageSlide Duration="0:00:01.500" Orientation="Horizontal" />
+                </CompositePageTransition>
+            </Carousel.PageTransition>
+        </Carousel>
+        <Panel Margin="20">
+            <Button Click="Previous">&lt;</Button>
+            <Button Click="Next" HorizontalAlignment="Right">&gt;</Button>
+        </Panel>
+    </Panel>
+
 </Window>
