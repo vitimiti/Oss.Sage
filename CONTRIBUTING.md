@@ -34,3 +34,6 @@ key.
 - Do **NOT** use naked loops if possible. Use `foreach` or `LINQ` instead.
 - Do **NOT** expose imported or unsafe methods, including in code that imports from an external, native library. Wrap it
   safely.
+- **DO** separate integers by thousands (i.e.: `1_000 + 10_000 + 10_000_000`).
+- **DO** separate hexadecimal numbers by groups of bytes and **ALWAYS** set the amount of bytes of the type (i.e.:
+  `var hex1 = 0x00_00_00_01U; var hex2 = 0x00_00_00_00_00_00_00_01UL;`)
