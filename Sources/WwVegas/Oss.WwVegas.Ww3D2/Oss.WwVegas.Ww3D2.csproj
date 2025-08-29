@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+    <Version>0.1.0</Version>
   </PropertyGroup>
   <PropertyGroup>
     <IsWindows
@@ -42,5 +43,6 @@
   </Choose>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
   </ItemGroup>
 </Project>

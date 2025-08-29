@@ -9,7 +9,7 @@ internal static partial class Sdl
     private static KeyValuePair<string, bool>[] LibraryNames =>
         [
             // Add more as necessary. The preferred order is most common to least common desktops
-            new("SDL3.dll", OperatingSystem.IsLinux()),
+            new("SDL3.dll", OperatingSystem.IsWindows()),
             new("libSDL3.so.0.2.16", OperatingSystem.IsLinux()),
         ];
 
