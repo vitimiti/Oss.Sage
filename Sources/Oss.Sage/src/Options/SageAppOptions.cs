@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 namespace Oss.Sage.Options;
 
 [PublicAPI]
-public class VegasAppOptions
+public class SageAppOptions
 {
     public string? AppName { get; set; }
     public Version? AppVersion { get; set; }
@@ -16,5 +16,5 @@ public class VegasAppOptions
     public (int Width, int Height) WindowSize { get; set; } = (1280, 720);
 
     public override string ToString() =>
-        $"{nameof(VegasAppOptions)} {{ {nameof(AppName)} = {AppName}, {nameof(AppVersion)} = {AppVersion}), {nameof(AppCreator)} = {AppCreator}, {nameof(AppCopyright)} = {AppCopyright}, {nameof(AppUrl)} = {AppUrl}, {nameof(WindowSize)} = {WindowSize} }}";
+        $"{nameof(SageAppOptions)} {{ {nameof(AppName)} = {AppName}, {nameof(AppVersion)} = {AppVersion}), {nameof(AppCreator)} = {AppCreator}, {nameof(AppCopyright)} = {AppCopyright}, {nameof(AppUrl)} = {AppUrl}, {nameof(WindowSize)} = {WindowSize} }}";
 }

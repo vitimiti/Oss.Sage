@@ -19,16 +19,16 @@ public class SageApp : IDisposable
     private static ILogger? s_logger;
 
     private readonly ILogger _logger;
-    private readonly VegasAppOptions _vegasAppOptions = new();
+    private readonly SageAppOptions _sageAppOptions = new();
 
     private Sdl.Window? _window;
 
-    public SageApp(ILogger logger, Action<VegasAppOptions>? vegasAppOptions = null)
+    public SageApp(ILogger logger, Action<SageAppOptions>? sageAppOptions = null)
     {
         _logger = logger;
         SetStaticLogger(logger);
 
-        vegasAppOptions?.Invoke(_vegasAppOptions);
+        sageAppOptions?.Invoke(_sageAppOptions);
     }
 
     private static void SetStaticLogger(ILogger logger) => s_logger = logger;
@@ -106,8 +106,8 @@ public class SageApp : IDisposable
         VegasAppLogging.InitializingSdl3Metadata(_logger);
 
         var error = Sdl.SetAppMetadata(
-            _vegasAppOptions.AppName,
-            _vegasAppOptions.AppVersion?.ToString(),
+            _sageAppOptions.AppName,
+            _sageAppOptions.AppVersion?.ToString(),
             typeof(SageApp).Assembly.GetName().Name?.ToLowerInvariant()
         );
 
@@ -118,7 +118,7 @@ public class SageApp : IDisposable
 
         error = Sdl.SetAppMetadataProperty(
             Sdl.PropertyAppMetadataCreatorString,
-            _vegasAppOptions.AppCreator
+            _sageAppOptions.AppCreator
         );
 
         if (error is not null)
@@ -131,7 +131,7 @@ public class SageApp : IDisposable
 
         error = Sdl.SetAppMetadataProperty(
             Sdl.PropertyAppMetadataCopyrightString,
-            _vegasAppOptions.AppCopyright
+            _sageAppOptions.AppCopyright
         );
 
         if (error is not null)
@@ -144,7 +144,7 @@ public class SageApp : IDisposable
 
         error = Sdl.SetAppMetadataProperty(
             Sdl.PropertyAppMetadataUrlString,
-            _vegasAppOptions.AppUrl
+            _sageAppOptions.AppUrl
         );
 
         if (error is not null)
@@ -220,9 +220,9 @@ public class SageApp : IDisposable
         try
         {
             _window = Sdl.Window.Create(
-                _vegasAppOptions.AppName ?? "Oss.Sage",
-                _vegasAppOptions.WindowSize.Width,
-                _vegasAppOptions.WindowSize.Height,
+                _sageAppOptions.AppName ?? "Oss.Sage",
+                _sageAppOptions.WindowSize.Width,
+                _sageAppOptions.WindowSize.Height,
                 Sdl.WindowFlags.Fullscreen | Sdl.WindowFlags.Resizable
             );
         }
