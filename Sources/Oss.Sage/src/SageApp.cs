@@ -2,14 +2,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
-using Oss.Sage.WwVegas.Ww3D2.Logging;
-using Oss.Sage.WwVegas.Ww3D2.NativeImports;
-using Oss.Sage.WwVegas.Ww3D2.Options;
+using Oss.Sage.Logging;
+using Oss.Sage.NativeImports;
+using Oss.Sage.Options;
 
-namespace Oss.Sage.WwVegas.Ww3D2;
+namespace Oss.Sage;
 
 [PublicAPI]
-public class VegasApp : IDisposable
+public class SageApp : IDisposable
 {
     [SuppressMessage(
         "csharpsquid",
@@ -23,7 +23,7 @@ public class VegasApp : IDisposable
 
     private Sdl.Window? _window;
 
-    protected VegasApp(ILogger logger, Action<VegasAppOptions>? vegasAppOptions = null)
+    public SageApp(ILogger logger, Action<VegasAppOptions>? vegasAppOptions = null)
     {
         _logger = logger;
         SetStaticLogger(logger);
@@ -48,7 +48,7 @@ public class VegasApp : IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        GenericLogging.Disposing(_logger, nameof(VegasApp));
+        GenericLogging.Disposing(_logger, nameof(SageApp));
 
         ReleaseUnmanagedResources();
         if (disposing)
@@ -56,7 +56,7 @@ public class VegasApp : IDisposable
             _window?.Dispose();
         }
 
-        GenericLogging.Disposed(_logger, nameof(VegasApp));
+        GenericLogging.Disposed(_logger, nameof(SageApp));
     }
 
     public void Dispose()
@@ -65,7 +65,7 @@ public class VegasApp : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    ~VegasApp() => Dispose(disposing: false);
+    ~SageApp() => Dispose(disposing: false);
 
     private static void SdlLoggingFunction(
         Sdl.LogCategory category,
@@ -108,7 +108,7 @@ public class VegasApp : IDisposable
         var error = Sdl.SetAppMetadata(
             _vegasAppOptions.AppName,
             _vegasAppOptions.AppVersion?.ToString(),
-            typeof(VegasApp).Assembly.GetName().Name?.ToLowerInvariant()
+            typeof(SageApp).Assembly.GetName().Name?.ToLowerInvariant()
         );
 
         if (error is not null)
@@ -220,7 +220,7 @@ public class VegasApp : IDisposable
         try
         {
             _window = Sdl.Window.Create(
-                _vegasAppOptions.AppName ?? "Oss.Sage.WwVegas.Ww3D2",
+                _vegasAppOptions.AppName ?? "Oss.Sage",
                 _vegasAppOptions.WindowSize.Width,
                 _vegasAppOptions.WindowSize.Height,
                 Sdl.WindowFlags.Fullscreen | Sdl.WindowFlags.Resizable
@@ -242,11 +242,11 @@ public class VegasApp : IDisposable
 
     protected void Initialize()
     {
-        GenericLogging.Initializing(_logger, nameof(VegasApp));
+        GenericLogging.Initializing(_logger, nameof(SageApp));
 
         InitializeSdl();
 
-        GenericLogging.Initialized(_logger, nameof(VegasApp));
+        GenericLogging.Initialized(_logger, nameof(SageApp));
     }
 
     public void Run()

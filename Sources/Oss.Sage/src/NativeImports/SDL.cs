@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Oss.Sage.WwVegas.Ww3D2.NativeImports;
+namespace Oss.Sage.NativeImports;
 
 internal static partial class Sdl
 {

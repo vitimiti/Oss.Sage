@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using TestGame;
+using Oss.Sage;
 
 Debug.WriteLine(
     """
@@ -32,5 +32,16 @@ using var loggerFactor = LoggerFactory.Create(builder =>
 
 var logger = loggerFactor.CreateLogger<Program>();
 
-using Game app = new(logger);
+using SageApp app = new(
+    logger,
+    options =>
+    {
+        options.AppName = typeof(Program).Assembly.GetName().Name;
+        options.AppVersion = typeof(Program).Assembly.GetName().Version;
+        options.AppCreator = "Oss.Sage Contributors";
+        options.AppCopyright = "MIT Licensed";
+        options.AppUrl = "https://github.com/vitimiti/Oss.Sage";
+    }
+);
+
 app.Run();

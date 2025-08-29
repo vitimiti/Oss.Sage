@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using JetBrains.Annotations;
 
-namespace Oss.Sage.WwVegas.Ww3D2.NativeImports;
+namespace Oss.Sage.NativeImports;
 
 internal static unsafe partial class Sdl
 {

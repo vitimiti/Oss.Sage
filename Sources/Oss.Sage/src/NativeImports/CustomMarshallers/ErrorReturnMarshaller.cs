@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace Oss.Sage.WwVegas.Ww3D2.NativeImports.CustomMarshallers;
+namespace Oss.Sage.NativeImports.CustomMarshallers;
 
 [CustomMarshaller(
     typeof(ExternalException),

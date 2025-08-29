@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices.Marshalling;
 
-namespace Oss.Sage.WwVegas.Ww3D2.NativeImports.CustomMarshallers;
+namespace Oss.Sage.NativeImports.CustomMarshallers;
 
 [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedOut, typeof(ManagedToUnmanagedOut))]
 internal static unsafe class UnownedStringMarshaller
