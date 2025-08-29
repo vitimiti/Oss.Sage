@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Oss.WwVegas.Ww3D2.Logging;
+namespace Oss.Sage.WwVegas.Ww3D2.Logging;
 
 internal static partial class GenericLogging
 {

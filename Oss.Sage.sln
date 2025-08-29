@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oss.Sage.Launcher", "Source
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WwVegas", "WwVegas", "{C0D209FA-C594-449B-AF91-D72473382FA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oss.WwVegas.Ww3D2", "Sources\WwVegas\Oss.WwVegas.Ww3D2\Oss.WwVegas.Ww3D2.csproj", "{7CA71725-31A0-424A-A457-7FD052A82548}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oss.Sage.WwVegas.Ww3D2", "Sources\WwVegas\Oss.Sage.WwVegas.Ww3D2\Oss.Sage.WwVegas.Ww3D2.csproj", "{7CA71725-31A0-424A-A457-7FD052A82548}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{FD61110A-C2E4-40D2-8BBB-0F3BA08E224D}"
 EndProject

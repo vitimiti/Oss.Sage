@@ -1,11 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
-using Oss.WwVegas.Ww3D2.Logging;
-using Oss.WwVegas.Ww3D2.NativeImports;
-using Oss.WwVegas.Ww3D2.Options;
+using Oss.Sage.WwVegas.Ww3D2.Logging;
+using Oss.Sage.WwVegas.Ww3D2.NativeImports;
+using Oss.Sage.WwVegas.Ww3D2.Options;
 
-namespace Oss.WwVegas.Ww3D2;
+namespace Oss.Sage.WwVegas.Ww3D2;
 
 [PublicAPI]
 public class VegasApp : IDisposable

@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Oss.WwVegas.Ww3D2.NativeImports;
+namespace Oss.Sage.WwVegas.Ww3D2.NativeImports;
 
 internal static unsafe partial class Sdl
 {

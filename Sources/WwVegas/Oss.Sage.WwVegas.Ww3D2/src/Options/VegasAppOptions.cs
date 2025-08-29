@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Oss.WwVegas.Ww3D2.Options;
+namespace Oss.Sage.WwVegas.Ww3D2.Options;
 
 [PublicAPI]
 public class VegasAppOptions

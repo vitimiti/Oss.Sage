@@ -1,9 +1,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-using Oss.WwVegas.Ww3D2.NativeImports.CustomMarshallers;
+using Oss.Sage.WwVegas.Ww3D2.NativeImports.CustomMarshallers;
 
-namespace Oss.WwVegas.Ww3D2.NativeImports;
+namespace Oss.Sage.WwVegas.Ww3D2.NativeImports;
 
 internal static partial class Sdl
 {
