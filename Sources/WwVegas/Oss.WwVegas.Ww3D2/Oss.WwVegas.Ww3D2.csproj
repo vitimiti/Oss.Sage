@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IsWindows
+      Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'"
+      >true</IsWindows
+    >
+    <IsOSX
+      Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'"
+      >true</IsOSX
+    >
+    <IsLinux
+      Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'"
+      >true</IsLinux
+    >
+  </PropertyGroup>
+  <!--    Add more as necessary. The preferred order is most common to least common desktops-->
+  <Choose>
+    <When Condition="'$(RuntimeIdentifier)' == 'win-x64' Or (('$(RuntimeIdentifier)' != 'win-x64' Or '$(RuntimeIdentifier)' != 'linux-x64') And '$(IsWindows)' == 'true')">
+      <ItemGroup>
+        <None Include="Native\win-x64\SDL3.dll">
+          <Link>SDL3.dll</Link>
+        </None>
+      </ItemGroup>
+    </When>
+    <When
+      Condition="
+        '$(RuntimeIdentifier)' == 'linux-x64' Or (('$(RuntimeIdentifier)' != 'win-x64' Or '$(RuntimeIdentifier)' != 'linux-x64') And '$(IsLinux)' == 'true')"
+    >
+      <ItemGroup>
+        <None Include="Native\linux-x64\libSDL3.so.0.2.16">
+          <Link>libSDL3.so.0.2.16</Link>
+        </None>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2025.2.1" PrivateAssets="all" />
+  </ItemGroup>
+</Project>
