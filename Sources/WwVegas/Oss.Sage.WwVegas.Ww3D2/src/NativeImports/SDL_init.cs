@@ -9,8 +9,8 @@ internal static partial class Sdl
 {
     public record struct InitFlags(uint Value)
     {
-        public static InitFlags Video => new(0x00000020U);
-        public static InitFlags Events => new(0x00004000U);
+        public static InitFlags Video => new(0x00_00_00_20U);
+        public static InitFlags Events => new(0x00_00_40_00U);
 
         public static InitFlags operator |(InitFlags left, InitFlags right) =>
             new(left.Value | right.Value);
