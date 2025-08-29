@@ -41,6 +41,21 @@ internal static partial class VegasAppLogging
     [LoggerMessage(LogLevel.Debug, Message = "SDL3 initialized")]
     public static partial void Sdl3Initialized(ILogger logger);
 
+    [LoggerMessage(LogLevel.Debug, Message = "Initializing SDL3 metadata...")]
+    public static partial void InitializingSdl3Metadata(ILogger logger);
+
+    [LoggerMessage(LogLevel.Debug, Message = "SDL3 metadata initialized")]
+    public static partial void Sdl3MetadataInitialized(ILogger logger);
+
+    [LoggerMessage(LogLevel.Information, Message = "App Creator: {Creator}")]
+    public static partial void AppCreator(ILogger logger, string? creator);
+
+    [LoggerMessage(LogLevel.Information, Message = "App Copyright: {Copyright}")]
+    public static partial void AppCopyright(ILogger logger, string? copyright);
+
+    [LoggerMessage(LogLevel.Information, Message = "App URL: {Url}")]
+    public static partial void AppUrl(ILogger logger, string? url);
+
     [LoggerMessage(LogLevel.Debug, Message = "Terminating SDL3...")]
     public static partial void TerminatingSdl3(ILogger logger);
 

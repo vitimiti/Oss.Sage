@@ -98,6 +98,66 @@ public class VegasApp : IDisposable
         }
     }
 
+    private void InitializeSdlMetadata()
+    {
+        VegasAppLogging.InitializingSdl3Metadata(_logger);
+
+        var error = Sdl.SetAppMetadata(
+            _vegasAppOptions.AppName,
+            _vegasAppOptions.AppVersion?.ToString(),
+            typeof(VegasApp).Assembly.GetName().Name?.ToLowerInvariant()
+        );
+
+        if (error is not null)
+        {
+            throw new InvalidOperationException("Unable to set app metadata", error);
+        }
+
+        error = Sdl.SetAppMetadataProperty(
+            Sdl.PropertyAppMetadataCreatorString,
+            _vegasAppOptions.AppCreator
+        );
+
+        if (error is not null)
+        {
+            throw new InvalidOperationException(
+                "Unable to set app metadata creator property",
+                error
+            );
+        }
+
+        error = Sdl.SetAppMetadataProperty(
+            Sdl.PropertyAppMetadataCopyrightString,
+            _vegasAppOptions.AppCopyright
+        );
+
+        if (error is not null)
+        {
+            throw new InvalidOperationException(
+                "Unable to set app metadata copyright property",
+                error
+            );
+        }
+
+        error = Sdl.SetAppMetadataProperty(
+            Sdl.PropertyAppMetadataUrlString,
+            _vegasAppOptions.AppUrl
+        );
+
+        if (error is not null)
+        {
+            throw new InvalidOperationException("Unable to set app metadata url property", error);
+        }
+
+        error = Sdl.SetAppMetadataProperty(Sdl.PropertyAppMetadataTypeString, "Game");
+        if (error is not null)
+        {
+            throw new InvalidOperationException("Unable to set app metadata type property", error);
+        }
+
+        VegasAppLogging.Sdl3MetadataInitialized(_logger);
+    }
+
     private void InitializeSdl()
     {
         VegasAppLogging.InitializingSdl3(_logger);
@@ -126,22 +186,28 @@ public class VegasApp : IDisposable
             requiredSdlVersion.ToString()
         );
 
-        var error = Sdl.SetAppMetadata(
-            _vegasAppOptions.AppName,
-            _vegasAppOptions.AppVersion,
-            typeof(VegasApp).Assembly.GetName().Name?.ToLowerInvariant()
-        );
+        InitializeSdlMetadata();
 
-        if (error is not null)
-        {
-            throw new InvalidOperationException("Unable to set app metadata", error);
-        }
-
-        error = Sdl.InitSubSystem(Sdl.InitFlags.Video | Sdl.InitFlags.Events);
+        var error = Sdl.InitSubSystem(Sdl.InitFlags.Video | Sdl.InitFlags.Events);
         if (error is not null)
         {
             throw new InvalidOperationException("Unable to initialize SDL3", error);
         }
+
+        VegasAppLogging.AppCreator(
+            _logger,
+            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataCreatorString)
+        );
+
+        VegasAppLogging.AppCopyright(
+            _logger,
+            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataCopyrightString)
+        );
+
+        VegasAppLogging.AppUrl(
+            _logger,
+            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataUrlString)
+        );
 
         VegasAppLogging.Sdl3Initialized(_logger);
     }

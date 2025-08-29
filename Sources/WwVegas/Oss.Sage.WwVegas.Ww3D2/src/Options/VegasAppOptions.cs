@@ -6,8 +6,13 @@ namespace Oss.Sage.WwVegas.Ww3D2.Options;
 public class VegasAppOptions
 {
     public string? AppName { get; set; }
-    public string? AppVersion { get; set; }
+    public Version? AppVersion { get; set; }
+    public string? AppCreator { get; set; }
+    public string? AppCopyright { get; set; }
+
+    [UriString]
+    public string? AppUrl { get; set; }
 
     public override string ToString() =>
-        $"{nameof(VegasAppOptions)} {{ {nameof(AppName)} = {AppName}, {nameof(AppVersion)} = {AppVersion}) }}";
+        $"{nameof(VegasAppOptions)} {{ {nameof(AppName)} = {AppName}, {nameof(AppVersion)} = {AppVersion}), {nameof(AppCreator)} = {AppCreator}, {nameof(AppCopyright)} = {AppCopyright}, {nameof(AppUrl)} = {AppUrl} }}";
 }

@@ -9,6 +9,9 @@ internal class Game(ILogger logger)
         options =>
         {
             options.AppName = typeof(Game).Assembly.GetName().Name;
-            options.AppVersion = typeof(Game).Assembly.GetName().Version?.ToString();
+            options.AppVersion = typeof(Game).Assembly.GetName().Version;
+            options.AppCreator = "Oss.Sage Contributors";
+            options.AppCopyright = "MIT Licensed";
+            options.AppUrl = "https://github.com/vitimiti/Oss.Sage";
         }
     );

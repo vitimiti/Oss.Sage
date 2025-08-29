@@ -45,4 +45,27 @@ internal static partial class Sdl
         string? appVersion,
         string? appIdentifier
     );
+
+    [LibraryImport(
+        LibraryName,
+        EntryPoint = "SDL_SetAppMetadataProperty",
+        StringMarshalling = StringMarshalling.Utf8
+    )]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    [return: MarshalUsing(typeof(ErrorReturnMarshaller))]
+    public static partial ExternalException? SetAppMetadataProperty(string name, string? value);
+
+    public const string PropertyAppMetadataCreatorString = "SDL.app.metadata.creator";
+    public const string PropertyAppMetadataCopyrightString = "SDL.app.metadata.copyright";
+    public const string PropertyAppMetadataUrlString = "SDL.app.metadata.url";
+    public const string PropertyAppMetadataTypeString = "SDL.app.metadata.type";
+
+    [LibraryImport(
+        LibraryName,
+        EntryPoint = "SDL_GetAppMetadataProperty",
+        StringMarshalling = StringMarshalling.Utf8
+    )]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    [return: MarshalUsing(typeof(UnownedStringMarshaller))]
+    public static partial string? GetAppMetadataProperty(string name);
 }
