@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Oss.Sage.WwVegas.Ww3D2.Logging;
@@ -19,6 +20,8 @@ public class VegasApp : IDisposable
 
     private readonly ILogger _logger;
     private readonly VegasAppOptions _vegasAppOptions = new();
+
+    private Sdl.Window? _window;
 
     protected VegasApp(ILogger logger, Action<VegasAppOptions>? vegasAppOptions = null)
     {
@@ -50,7 +53,7 @@ public class VegasApp : IDisposable
         ReleaseUnmanagedResources();
         if (disposing)
         {
-            // Nothing to dispose of here.
+            _window?.Dispose();
         }
 
         GenericLogging.Disposed(_logger, nameof(VegasApp));
@@ -158,6 +161,24 @@ public class VegasApp : IDisposable
         VegasAppLogging.Sdl3MetadataInitialized(_logger);
     }
 
+    private void LogAppMetadata()
+    {
+        VegasAppLogging.AppCreator(
+            _logger,
+            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataCreatorString)
+        );
+
+        VegasAppLogging.AppCopyright(
+            _logger,
+            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataCopyrightString)
+        );
+
+        VegasAppLogging.AppUrl(
+            _logger,
+            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataUrlString)
+        );
+    }
+
     private void InitializeSdl()
     {
         VegasAppLogging.InitializingSdl3(_logger);
@@ -194,20 +215,27 @@ public class VegasApp : IDisposable
             throw new InvalidOperationException("Unable to initialize SDL3", error);
         }
 
-        VegasAppLogging.AppCreator(
-            _logger,
-            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataCreatorString)
-        );
+        LogAppMetadata();
 
-        VegasAppLogging.AppCopyright(
-            _logger,
-            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataCopyrightString)
-        );
+        try
+        {
+            _window = Sdl.Window.Create(
+                _vegasAppOptions.AppName ?? "Oss.Sage.WwVegas.Ww3D2",
+                _vegasAppOptions.WindowSize.Width,
+                _vegasAppOptions.WindowSize.Height,
+                Sdl.WindowFlags.Fullscreen | Sdl.WindowFlags.Resizable
+            );
+        }
+        catch (ExternalException exception)
+        {
+            throw new InvalidOperationException("Unable to create SDL3 window", exception);
+        }
 
-        VegasAppLogging.AppUrl(
-            _logger,
-            Sdl.GetAppMetadataProperty(Sdl.PropertyAppMetadataUrlString)
-        );
+        error = Sdl.DisableScreenSaver();
+        if (error is not null)
+        {
+            throw new InvalidOperationException("Unable to disable screen saver", error);
+        }
 
         VegasAppLogging.Sdl3Initialized(_logger);
     }
