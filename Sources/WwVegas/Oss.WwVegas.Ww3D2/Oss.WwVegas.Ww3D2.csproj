@@ -3,6 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup>
@@ -19,7 +20,7 @@
       >true</IsLinux
     >
   </PropertyGroup>
-  <!--    Add more as necessary. The preferred order is most common to least common desktops-->
+  <!-- Add more as necessary. The preferred order is most common to least common desktops -->
   <Choose>
     <When Condition="'$(RuntimeIdentifier)' == 'win-x64' Or (('$(RuntimeIdentifier)' != 'win-x64' Or '$(RuntimeIdentifier)' != 'linux-x64') And '$(IsWindows)' == 'true')">
       <ItemGroup>
