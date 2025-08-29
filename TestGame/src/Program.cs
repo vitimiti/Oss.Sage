@@ -13,12 +13,21 @@ Debug.WriteLine(
 
 using var loggerFactor = LoggerFactory.Create(builder =>
 {
+    builder.SetMinimumLevel(
 #if DEBUG
-    builder.SetMinimumLevel(LogLevel.Trace);
+        LogLevel.Debug
 #else
-    builder.SetMinimumLevel(LogLevel.Information);
+        LogLevel.Information
 #endif
-    builder.AddConsole();
+    );
+
+    builder.AddSimpleConsole(options =>
+    {
+        options.IncludeScopes = true;
+        options.SingleLine = true;
+        options.TimestampFormat = "yyyy-MM-dd HH:mm:ss.fff zzz ";
+        options.UseUtcTimestamp = false;
+    });
 });
 
 var logger = loggerFactor.CreateLogger<Program>();

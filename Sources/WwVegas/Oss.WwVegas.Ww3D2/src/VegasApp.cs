@@ -30,22 +30,30 @@ public class VegasApp : IDisposable
 
     private static void SetStaticLogger(ILogger logger) => s_logger = logger;
 
-    private static void ReleaseUnmanagedResources()
+    private void ReleaseUnmanagedResources()
     {
+        VegasAppLogging.TerminatingSdl3(_logger);
+
         Sdl.Quit();
         if (Sdl.LogOutputFunctionHandle.IsAllocated)
         {
             Sdl.LogOutputFunctionHandle.Free();
         }
+
+        VegasAppLogging.Sdl3Terminated(_logger);
     }
 
     protected virtual void Dispose(bool disposing)
     {
+        GenericLogging.Disposing(_logger, nameof(VegasApp));
+
         ReleaseUnmanagedResources();
         if (disposing)
         {
             // Nothing to dispose of here.
         }
+
+        GenericLogging.Disposed(_logger, nameof(VegasApp));
     }
 
     public void Dispose()
@@ -67,35 +75,56 @@ public class VegasApp : IDisposable
         switch (priority)
         {
             case Sdl.LogPriority.Trace or Sdl.LogPriority.Verbose:
-                VegasAppLogging.SdlTrace(s_logger, category.ToString(), message);
+                VegasAppLogging.SdlTrace(s_logger, message, category.ToString());
                 break;
             case Sdl.LogPriority.Debug:
-                VegasAppLogging.SdlDebug(s_logger, category.ToString(), message);
+                VegasAppLogging.SdlDebug(s_logger, message, category.ToString());
                 break;
             case Sdl.LogPriority.Info:
-                VegasAppLogging.SdlInfo(s_logger, category.ToString(), message);
+                VegasAppLogging.SdlInfo(s_logger, message, category.ToString());
                 break;
             case Sdl.LogPriority.Warn:
-                VegasAppLogging.SdlWarning(s_logger, category.ToString(), message);
+                VegasAppLogging.SdlWarning(s_logger, message, category.ToString());
                 break;
             case Sdl.LogPriority.Error:
-                VegasAppLogging.SdlError(s_logger, category.ToString(), message);
+                VegasAppLogging.SdlError(s_logger, message, category.ToString());
                 break;
             case Sdl.LogPriority.Critical:
-                VegasAppLogging.SdlCritical(s_logger, category.ToString(), message);
+                VegasAppLogging.SdlCritical(s_logger, message, category.ToString());
                 break;
             default:
-                VegasAppLogging.SdlInvalid(s_logger, category.ToString(), message);
+                VegasAppLogging.SdlInvalid(s_logger, message, category.ToString());
                 break;
         }
     }
 
-    protected void Initialize()
+    private void InitializeSdl()
     {
-        Sdl.SetLogOutputFunction(SdlLoggingFunction);
+        VegasAppLogging.InitializingSdl3(_logger);
+
+        Sdl.SetLogPriorities(
 #if DEBUG
-        Sdl.SetLogPriorities(Sdl.LogPriority.Trace);
+            Sdl.LogPriority.Debug
+#else
+            Sdl.LogPriority.Info
 #endif
+        );
+
+        Sdl.SetLogOutputFunction(SdlLoggingFunction);
+
+        Version requiredSdlVersion = new(3, 2, 16);
+        if (Sdl.GetVersion() < requiredSdlVersion)
+        {
+            throw new InvalidOperationException(
+                $"SDL3 version {requiredSdlVersion} or higher is required."
+            );
+        }
+
+        VegasAppLogging.UsingSdl3Version(
+            _logger,
+            Sdl.GetVersion().ToString(),
+            requiredSdlVersion.ToString()
+        );
 
         var error = Sdl.SetAppMetadata(
             _vegasAppOptions.AppName,
@@ -113,11 +142,21 @@ public class VegasApp : IDisposable
         {
             throw new InvalidOperationException("Unable to initialize SDL3", error);
         }
+
+        VegasAppLogging.Sdl3Initialized(_logger);
+    }
+
+    protected void Initialize()
+    {
+        GenericLogging.Initializing(_logger, nameof(VegasApp));
+
+        InitializeSdl();
+
+        GenericLogging.Initialized(_logger, nameof(VegasApp));
     }
 
     public void Run()
     {
         Initialize();
-        _logger.LogInformation("VegasApp initialized");
     }
 }

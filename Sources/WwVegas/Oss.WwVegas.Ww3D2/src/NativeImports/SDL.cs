@@ -18,7 +18,7 @@ internal static partial class Sdl
             typeof(Sdl).Assembly,
             (name, assembly, path) =>
                 NativeLibrary.Load(
-                    LibraryNames.FirstOrDefault(x => x.Value).Key ?? name,
+                    LibraryNames.FirstOrDefault(pair => pair.Value).Key ?? name,
                     assembly,
                     path
                 )

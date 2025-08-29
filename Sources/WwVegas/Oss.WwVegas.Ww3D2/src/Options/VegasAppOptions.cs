@@ -9,5 +9,5 @@ public class VegasAppOptions
     public string? AppVersion { get; set; }
 
     public override string ToString() =>
-        $"{nameof(VegasAppOptions)} {{ {nameof(AppName)} = {AppName}, {nameof(AppVersion)} = {AppVersion})}}";
+        $"{nameof(VegasAppOptions)} {{ {nameof(AppName)} = {AppName}, {nameof(AppVersion)} = {AppVersion}) }}";
 }
